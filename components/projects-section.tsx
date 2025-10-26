@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { ProjectCard } from "./project-card"
+import { useState } from "react"
 
 const projects = [
   {
@@ -48,7 +49,14 @@ const projects = [
   },
 ]
 
+const categories = ["All", "Commercial", "Music", "Product", "Branding", "Events", "Animation"]
+
 export function ProjectsSection() {
+  const [selectedCategory, setSelectedCategory] = useState("All")
+
+  const filteredProjects =
+    selectedCategory === "All" ? projects : projects.filter((project) => project.category === selectedCategory)
+
   return (
     <section id="projects" className="py-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -67,15 +75,38 @@ export function ProjectsSection() {
           </p>
         </motion.div>
 
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mb-12"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
+                selectedCategory === category
+                  ? "bg-primary text-white shadow-lg shadow-primary/50"
+                  : "bg-secondary text-foreground hover:bg-gray-200"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </motion.div>
+
         {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
+              layout
             >
               <ProjectCard {...project} />
             </motion.div>
