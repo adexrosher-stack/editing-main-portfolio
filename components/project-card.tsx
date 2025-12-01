@@ -29,38 +29,39 @@ export function ProjectCard({
 
   // Autoplay on scroll
   useEffect(() => {
-    if (!autoPlayOnScroll || !videoRef.current) return;
+    const vid = videoRef.current;
+    if (!autoPlayOnScroll || !vid) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (videoRef.current) {
-          if (entry.isIntersecting) {
-            videoRef.current.play().catch(() => {});
-            setIsPlaying(true);
-          } else {
-            videoRef.current.pause();
-            setIsPlaying(false);
-          }
+        if (!vid) return;
+        if (entry.isIntersecting) {
+          vid.play().catch(() => console.log(`Autoplay blocked: ${video}`));
+          setIsPlaying(true);
+        } else {
+          vid.pause();
+          setIsPlaying(false);
         }
       },
       { threshold: 0.5 }
     );
 
-    observer.observe(videoRef.current);
+    observer.observe(vid);
     return () => observer.disconnect();
-  }, [autoPlayOnScroll]);
+  }, [autoPlayOnScroll, video]);
 
   // Tap-to-play
   const handleTap = () => {
-    if (tapToPlay && videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play();
-        setIsPlaying(true);
-      }
+    const vid = videoRef.current;
+    if (!tapToPlay || !vid) return;
+
+    if (isPlaying) {
+      vid.pause();
+      setIsPlaying(false);
+    } else {
+      vid.play().catch(() => console.log(`Tap-to-play blocked: ${video}`));
+      setIsPlaying(true);
     }
   };
 
@@ -82,9 +83,10 @@ export function ProjectCard({
           loop
           muted
           playsInline
+          onError={() => console.log(`Failed to load video: ${video}`)}
         />
         {!isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-4xl font-bold">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-4xl font-bold pointer-events-none">
             ▶
           </div>
         )}

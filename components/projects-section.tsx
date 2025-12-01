@@ -5,54 +5,12 @@ import { ProjectCard } from "./project-card";
 import { useState } from "react";
 
 const projects = [
-  {
-    id: "corporate-promo",
-    title: "Corporate Promo",
-    description: "High-energy promotional video for tech startup",
-    video: "/one.mp4",
-    image: "/thumbnails/corporate-promo.jpg",
-    category: "Commercial",
-  },
-  {
-    id: "music-video",
-    title: "Music Video",
-    description: "Cinematic music video with motion graphics",
-    video: "/two.mp4",
-    image: "/thumbnails/music-video.jpg",
-    category: "Music",
-  },
-  {
-    id: "product-demo",
-    title: "Product Demo",
-    description: "Sleek product demonstration with animations",
-    video: "/three.mp4",
-    image: "/thumbnails/product-demo.jpg",
-    category: "Product",
-  },
-  {
-    id: "brand-story",
-    title: "Brand Story",
-    description: "Emotional brand narrative with motion design",
-    video: "/vox.mp4",
-    image: "/thumbnails/brand-story.jpg",
-    category: "Branding",
-  },
-  {
-    id: "event-recap",
-    title: "Event Recap",
-    description: "Dynamic event coverage with creative editing",
-    video: "/1009.mp4",
-    image: "/thumbnails/event-recap.jpg",
-    category: "Events",
-  },
-  {
-    id: "animation-reel",
-    title: "Animation Reel",
-    description: "Showcase of motion graphics and animations",
-    video: "/rosher.mp4",
-    image: "/thumbnails/animation-reel.jpg",
-    category: "Animation",
-  },
+  { id: "corporate-promo", title: "Corporate Promo", description: "High-energy promotional video for tech startup", video: "/one.mp4", image: "/thumbnails/corporate-promo.jpg", category: "Commercial" },
+  { id: "music-video", title: "Music Video", description: "Cinematic music video with motion graphics", video: "/two.mp4", image: "/thumbnails/music-video.jpg", category: "Music" },
+  { id: "product-demo", title: "Product Demo", description: "Sleek product demonstration with animations", video: "/three.mp4", image: "/thumbnails/product-demo.jpg", category: "Product" },
+  { id: "brand-story", title: "Brand Story", description: "Emotional brand narrative with motion design", video: "/vox.mp4", image: "/thumbnails/brand-story.jpg", category: "Branding" },
+  { id: "event-recap", title: "Event Recap", description: "Dynamic event coverage with creative editing", video: "/1009.mp4", image: "/thumbnails/event-recap.jpg", category: "Events" },
+  { id: "animation-reel", title: "Animation Reel", description: "Showcase of motion graphics and animations", video: "/rosher.mp4", image: "/thumbnails/animation-reel.jpg", category: "Animation" },
 ];
 
 const categories = ["All", "Commercial", "Music", "Product", "Branding", "Events", "Animation"];
@@ -108,7 +66,7 @@ export function ProjectsSection() {
           ))}
         </motion.div>
 
-        {/* Projects grid (Rule B applied) */}
+        {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {filteredProjects.map((project, index) => (
             <motion.div
@@ -128,19 +86,6 @@ export function ProjectsSection() {
             </motion.div>
           ))}
         </div>
-
-        {/* View all button */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-        >
-          <button className="px-8 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
-            View All Projects
-          </button>
-        </motion.div>
       </div>
     </section>
   );
